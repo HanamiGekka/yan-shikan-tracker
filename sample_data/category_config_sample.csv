@@ -1,0 +1,5 @@
+﻿category,mode,target_min,lower_min,upper_min,weight,core
+运动,target,30,10,60,8,1
+休息,range,20,0,60,4,0
+其他,record_only,0,0,0,0,0
+赶路,minimize,0,0,30,3,0
