@@ -5,8 +5,8 @@ from typing import Any
 
 import pandas as pd
 
-from config import CORE_CATEGORY_SET
-from category_registry import CATEGORY_JAPAN_MASTERS_EXAM
+from .config import CORE_CATEGORY_SET
+from .category_registry import CATEGORY_JAPAN_MASTERS_EXAM
 
 
 PRIORITY_CATEGORIES = (CATEGORY_JAPAN_MASTERS_EXAM, "日语JLPT", "专业能力", "运动")

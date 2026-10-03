@@ -9,8 +9,8 @@ import sys
 
 import pandas as pd
 
-from config import OUTPUT_DIR
-from excel_io import (
+from .config import OUTPUT_DIR
+from .excel_io import (
     ensure_project_files,
     get_daily_output_paths,
     get_day_detail_for_date,
@@ -20,9 +20,9 @@ from excel_io import (
     load_category_config,
     save_daily_summary_workbook,
 )
-from plotter import generate_trend_charts, get_smoothing_runtime_status
-from reporter import generate_llm_prompt, generate_today_report
-from scorer import compute_daily_scores
+from .plotter import generate_trend_charts, get_smoothing_runtime_status
+from .reporter import generate_llm_prompt, generate_today_report
+from .scorer import compute_daily_scores
 
 
 MONTH_DIR_PATTERN = re.compile(r"^\d{4}\.\d{2}$")

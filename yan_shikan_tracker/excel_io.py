@@ -13,8 +13,8 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
 
-from category_registry import normalize_category_name, normalize_feeling
-from config import (
+from .category_registry import normalize_category_name, normalize_feeling
+from .config import (
     CATEGORY_CONFIG_COLUMNS,
     CATEGORY_CONFIG_PATH,
     CATEGORIES,

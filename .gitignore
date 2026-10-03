@@ -21,6 +21,7 @@ private_data/
 exports/
 
 # Historical and personal local documents.
+.local/
 engineering_log/
 Why_Develop_This_Project.md
 Temporary_Prompt_Words*.md
@@ -28,8 +29,8 @@ Temporary_Prompt_Words*.md
 PRIVATE_DATA_INVENTORY*.md
 Research_Time_*.md
 Research_Time_*.docx
-FINAL_MANUAL_SMOKE_TEST.md
-PUBLIC_GIT_MANIFEST.md
+/FINAL_MANUAL_SMOKE_TEST.md
+/PUBLIC_GIT_MANIFEST.md
 
 *.log
 *.tmp

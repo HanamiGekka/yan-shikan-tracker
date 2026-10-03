@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from category_registry import (
+from .category_registry import (
     CANONICAL_CATEGORIES,
     CATEGORY_ALIASES,
     CATEGORY_COMMUTE_PROCESS,
@@ -29,7 +29,7 @@ from category_registry import (
 )
 
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parents[1]
 # Set YAN_SHIKAN_DATA_ROOT to a temporary directory for demos or manual smoke tests.
 # With no override, existing local data/output locations remain unchanged.
 STORAGE_ROOT = Path(os.environ.get("YAN_SHIKAN_DATA_ROOT") or BASE_DIR).expanduser().resolve()

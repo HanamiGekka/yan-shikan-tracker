@@ -1,22 +1,29 @@
-# Yan Shikan Tracker / 研时记
+# Yan Shikan Tracker
 
-研时记是本地 Python 命令行工具，用于逐段记录时间，并生成每日评分、文字复盘和趋势图。原始记录由使用者保存在本机。
+A local Python CLI for time tracking, daily review, and productivity trends.
+
+## Overview
+
+Record time segments, review daily scores, and rebuild reports from local Excel records. The CLI and workbook labels currently use Chinese. There is no web service or database.
 
 ## Features
 
-- 按日期录入时长、类别、状态评分和备注；每段确认后保存可恢复草稿。
-- 同一天可多次追加。类别旧名会在读取和计算时归一。
-- 生成每日汇总 Excel、文字报告、LLM 提示词和 7/30/90 天及全历史趋势图。
-- 可按日、日期范围或全历史重建派生输出。
-- 原始每日 Excel 经临时文件验证后替换；覆盖前在本地保留一份前版本。
+- Record date, duration, category, feeling (0-3), and an optional note.
+- Save confirmed segments to recoverable JSON drafts and append multiple sessions to the same day.
+- Read historical category aliases without changing stored records.
+- Generate daily summary workbooks, text reviews, LLM prompts, and 7/30/90-day and full-history charts.
+- Rebuild outputs for a date, date range, or all recorded dates.
+- Validate a temporary daily workbook before atomic replacement, retaining one previous version per date.
 
-## Architecture
+## How It Works
 
-`main.py` 是 CLI 入口。`input_cli.py` 和 `draft_io.py` 负责交互与草稿，`session_flow.py` 串联正式提交，`excel_io.py` 保存和读取原始 Excel。`category_registry.py`、`config.py`、`scorer.py` 定义类别与评分；`reporter.py`、`plotter.py`、`output_manager.py` 生成派生结果。没有 Web 前端或数据库。
+The root `main.py` launches `yan_shikan_tracker.main`. Input and drafts flow through `input_cli.py`, `draft_io.py`, and `session_flow.py`; `excel_io.py` stores the source records. `category_registry.py`, `config.py`, and `scorer.py` define category and scoring rules. `reporter.py`, `plotter.py`, and `output_manager.py` create rebuildable outputs.
 
-## Requirements and installation
+A successful raw commit clears its draft before rebuilding output. If output generation fails, the raw record remains saved; use Output Management to rebuild that date.
 
-使用 Python 3.11 或更高版本。建议在独立虚拟环境中安装直接依赖：
+## Installation
+
+Use Python 3.11 or later. From the repository root, create a virtual environment:
 
 ```powershell
 python -m venv .venv
@@ -24,7 +31,7 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-若使用已有 conda 环境，先激活环境，再运行 `python -m pip install -r requirements.txt`。依赖清单记录兼容范围，没有冻结整个个人环境。
+An existing conda environment also works. Dependency ranges describe supported local environments rather than freezing a personal environment.
 
 ## Usage
 
@@ -32,42 +39,72 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-主菜单提供录入、输出管理和退出。录入时依次输入日期、时长、类别、feeling（0–3）和备注；可确认、重填、放弃或结束当前会话。确认段落先进入草稿；正式提交后写入原始 Excel，再重建该日输出。若输出重建失败，原始记录仍保留，程序会提示从输出管理重新生成。
+Choose Record, Output Management, or Exit. Record a date, duration in minutes, category, feeling, and note; confirm each segment, then submit the session. Confirmed segments remain drafts until submission.
 
-首次启动会生成本地 `data/category_config.csv`。可在关闭程序后编辑目标时长和权重；已有配置不会在启动时被自动改写。
+The first launch creates `data/category_config.csv`. With the app closed, edit target durations and weights there. Existing configuration is normalized in memory and is not rewritten on startup. Category names and core-category membership remain defined in the source.
 
-## Data model and safety
+## Data Storage and Privacy
 
-- `data/YYYY.MM/YYYY-MM-DD/时间记录_YYYY-MM-DD.xlsx`：唯一事实来源，列包含日期、类别、时长、feeling、备注、会话 ID、写入时间。
-- `data/drafts/`：未正式提交的 JSON 草稿。
-- `data/data_backup/YYYY.MM/YYYY-MM-DD/`：同日追加前的上一版原始工作簿，每日只保留一份。
-- `output/`：从原始记录生成的汇总 Excel、TXT 和图像；可重建，不能代替原始数据备份。
+Default storage stays at the repository root, regardless of the terminal's current directory:
 
-**`data/` 与 `output/` 永远是本地私人目录，不纳入公开 Git。** 请另行备份 `data/`；不要把真实记录、备注、草稿或派生统计复制到 issue、测试夹具或演示数据中。
+- `data/YYYY.MM/YYYY-MM-DD/`: daily source Excel with date, category, duration, feeling, note, session ID, and creation time.
+- `data/drafts/`: recoverable JSON drafts.
+- `data/data_backup/YYYY.MM/YYYY-MM-DD/`: one previous daily workbook before an append.
+- `output/`: generated workbooks, text, and charts, all rebuildable from source records.
 
-## Synthetic sample data
+**`data/` and `output/` contain local user data and are intentionally not tracked by Git.** Back up `data/` separately: a single previous version is not a complete backup strategy. Never copy real notes, drafts, or statistics into tests, examples, issues, or repository documentation. Generated LLM prompts are local text files; review privacy before sharing them with any external service.
 
-`sample_data/` 提供三个完全虚构的 2030 年日期工作簿和示例类别配置，用于查看格式与回归测试。它不取自真实记录。`python -m pytest` 会把样例复制到临时目录，不会写入真实 `data/`。
-
-需要手动体验 CLI 时，先设置一个**新的临时根目录**，再启动程序：
+For a safe demo, use a new temporary storage root:
 
 ```powershell
-$env:YAN_SHIKAN_DATA_ROOT = Join-Path $env:TEMP 'yan-shikan-demo'
+$demoRoot = Join-Path $env:TEMP ('yan-shikan-demo-' + (Get-Date -Format 'yyyyMMddHHmmss'))
+$env:YAN_SHIKAN_DATA_ROOT = $demoRoot
 python main.py
 Remove-Item Env:YAN_SHIKAN_DATA_ROOT
 ```
 
-设置变量后，程序只在指定根目录下创建 `data/`、`output/`；不读取项目原有私人记录。手动体验请使用明显虚构日期，结束后自行确认临时目录内容。不要把临时根目录指向真实项目。
+All generated files must be inside `$demoRoot`. Do not point this variable at your real records when experimenting.
+
+## Sample Data
+
+`sample_data/` contains three fictional 2030 workbooks and an example category CSV. Notes are English; Chinese schema labels and category aliases match the app's existing format. Never mix demo records with real `data/`. Automated tests copy samples to temporary directories.
 
 ## Testing
 
 ```powershell
 python -m pip install -r requirements-dev.txt
-python -m pytest -q tests
+python -m pytest -q
+python -m compileall -q main.py yan_shikan_tracker tests
 ```
 
-测试覆盖评分、旧类别兼容、草稿恢复、同日追加、原子写入失败、输出重建失败、坏文件报错和虚构数据生成链。测试存储路径重定向到 pytest 临时目录。
+Tests cover scoring, category compatibility, draft recovery, same-day append, write failures, output failures, malformed workbooks, configuration preservation, sample output generation, and storage-root resolution. Manual CLI validation is in [the smoke test](docs/testing/MANUAL_SMOKE_TEST.md). CI uses Python 3.11 on Ubuntu.
 
-## Project status and license
+## Repository Structure
 
-当前处于本地发布准备阶段，最后一个已记录的功能版本是 v0.5.3。公开发布前还需人工 CLI smoke test 和许可决定。**目前未添加 LICENSE；未获作者许可时，不应假定代码可再分发或修改。**
+```text
+yan-shikan-tracker/
+|-- yan_shikan_tracker/
+|-- tests/
+|-- sample_data/
+|-- docs/testing/
+|-- docs/release/
+|-- .github/workflows/
+|-- main.py
+|-- requirements.txt
+|-- requirements-dev.txt
+|-- README.md
+|-- AGENTS.md
+|-- CHANGELOG.md
+|-- ROADMAP.md
+|-- LICENSE
+```
+
+Local data, generated output, and local archives are excluded from this public tree. See [the public manifest](docs/release/PUBLIC_GIT_MANIFEST.md).
+
+## Project Status
+
+The v0.6.0 candidate focuses on data integrity and repository cleanup. Public publication remains gated on the manual CLI smoke test and remote CI. No EXE, web deployment, or PyPI package is planned for this release. Future ideas are in [ROADMAP.md](ROADMAP.md).
+
+## License
+
+MIT; see [LICENSE](LICENSE).

@@ -9,12 +9,12 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-import category_registry
-import draft_io
-import excel_io
-import output_manager
-import scorer
-import session_flow
+from yan_shikan_tracker import category_registry
+from yan_shikan_tracker import draft_io
+from yan_shikan_tracker import excel_io
+from yan_shikan_tracker import output_manager
+from yan_shikan_tracker import scorer
+from yan_shikan_tracker import session_flow
 
 DAY = "2030-01-10"
 

@@ -6,8 +6,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from category_registry import normalize_category_name, normalize_feeling
-from config import DRAFT_DIR
+from .category_registry import normalize_category_name, normalize_feeling
+from .config import DRAFT_DIR
 
 
 def _draft_path(date_str: str, session_id: str | None = None) -> Path:

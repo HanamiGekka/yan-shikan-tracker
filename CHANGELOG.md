@@ -1,58 +1,62 @@
 # Changelog
 
-本文件从本地 `engineering_log/version.md` 提炼。以下为已有版本记录；当前工程整理尚未另定版本号。
+Known version history is retained below. Dates and changes reflect the existing version record.
 
-## Unreleased — local pre-release engineering
+## [0.6.0] - 2026-10-03
 
-- 原始每日 Excel 改为临时写入、回读验证和原子替换，保留一份前版本。
-- 分类配置启动时只读并在内存归一；坏工作簿不再静默漏算。
-- 原始数据已保存但派生输出失败时，明确提示可以重建。
-- 新增虚构样例、核心回归测试、私人数据边界和基础工程文档。
+- Validate temporary daily Excel writes before atomic replacement and retain one previous workbook per date.
+- Preserve recoverable drafts on raw write failure; report saved raw data when derived output fails.
+- Report source workbook read failures explicitly instead of silently omitting records.
+- Create missing category configuration safely; normalize existing configuration without rewriting it.
+- Add fully synthetic samples, pytest regression tests, and a basic GitHub Actions CI workflow.
+- Separate local archives from public files and move implementation into a simple Python package while preserving the root launcher and storage locations.
+- Standardize maintained documentation in English and remove the personalized report salutation.
+- Adopt the MIT license.
 
-## v0.5.3 — 2026-04-22
+## [0.5.3] - 2026-04-22
 
-- 统一项目语义和标准类别，集中处理旧类别别名与 feeling 评分。
+- Unify project terminology and standard categories; centralize historical category aliases and feeling scoring.
 
-## v0.5.2 — 2026-04-06
+## [0.5.2] - 2026-04-06
 
-- 修复草稿处理、恢复后直接提交及正常退出和中断流程。
+- Fix draft handling, direct submission after recovery, normal exit, and interruption flows.
 
-## v0.5.1 — 2026-04-06
+## [0.5.1] - 2026-04-06
 
-- 修复 CLI 会话退出语义，保留中断后的已确认草稿。
+- Fix CLI session exit semantics and retain confirmed drafts after interruption.
 
-## v0.5 — 2026-04-06
+## [0.5] - 2026-04-06
 
-- 集中输出管理：按日、范围、全历史重建与图表重绘；明确 `data/` 为事实来源。
+- Centralize output rebuilding by date, range, and full history, plus chart redraws; establish source data as authoritative.
 
-## v0.4.4 — 2026-03-27
+## [0.4.4] - 2026-03-27
 
-- 增强趋势图运行诊断、日报建议和汇总工作簿写回验证。
+- Improve chart runtime diagnostics, daily suggestions, and summary workbook write verification.
 
-## v0.4.3 — 2026-03-27
+## [0.4.3] - 2026-03-27
 
-- 改进趋势图平滑和每日分类明细、文字报告。
+- Improve trend smoothing, daily category detail, and text reports.
 
-## v0.4.2 — 2026-03-26
+## [0.4.2] - 2026-03-26
 
-- 修复 feeling=0 的草稿归一问题，改进趋势图平滑降级。
+- Fix draft normalization for feeling=0 and improve smoothing fallbacks.
 
-## v0.4.1 — 2026-03-26
+## [0.4.1] - 2026-03-26
 
-- 修复低状态评分边界，增加多时间窗口趋势图。
+- Fix low-feeling scoring boundaries and add multiple chart windows.
 
-## v0.4 — 2026-03-15
+## [0.4] - 2026-03-15
 
-- 增加逐段草稿保存、恢复和单段确认，统一趋势图输出。
+- Add per-segment draft saving, recovery, and confirmation; unify chart output.
 
-## v0.3 — 2026-03-09
+## [0.3] - 2026-03-09
 
-- 修复同日多次录入覆盖问题，改为累计追加。
+- Replace same-day overwrites with cumulative appends.
 
-## v0.2 — 2026-03-09
+## [0.2] - 2026-03-09
 
-- 按月和日期整理数据及输出目录。
+- Organize data and output by month and date.
 
-## v0.1 — 2026-03-08
+## [0.1] - 2026-03-08
 
-- 初始可运行的 CLI 录入、评分、报告和图表流程。
+- Initial working CLI recording, scoring, report, and chart flow.

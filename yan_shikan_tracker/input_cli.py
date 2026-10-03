@@ -6,9 +6,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from category_registry import FEELING_GUIDE_TEXT, describe_feeling
-from config import CATEGORY_MENU, MENU_CODE_TO_CATEGORY
-from draft_io import (
+from .category_registry import FEELING_GUIDE_TEXT, describe_feeling
+from .config import CATEGORY_MENU, MENU_CODE_TO_CATEGORY
+from .draft_io import (
     build_draft_segment,
     delete_all_drafts,
     delete_draft,
@@ -16,7 +16,7 @@ from draft_io import (
     load_draft,
     save_draft,
 )
-from session_flow import commit_confirmed_segments, print_session_write_result
+from .session_flow import commit_confirmed_segments, print_session_write_result
 
 
 QUIT_COMMANDS = {"q", "quit"}

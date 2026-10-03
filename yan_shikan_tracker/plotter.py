@@ -9,7 +9,7 @@ from matplotlib import colors as mcolors, font_manager, patheffects
 import numpy as np
 import pandas as pd
 
-from config import CHART_WINDOWS
+from .config import CHART_WINDOWS
 
 try:
     from scipy.interpolate import PchipInterpolator, make_interp_spline

@@ -4,8 +4,8 @@ from typing import Any
 
 import pandas as pd
 
-from category_registry import FEELING_MULTIPLIERS, normalize_category_name, normalize_feeling
-from config import DAILY_SUMMARY_COLUMNS, SCORE_DETAIL_COLUMNS
+from .category_registry import FEELING_MULTIPLIERS, normalize_category_name, normalize_feeling
+from .config import DAILY_SUMMARY_COLUMNS, SCORE_DETAIL_COLUMNS
 
 
 def apply_feeling(duration_min: float, feeling: int) -> float:

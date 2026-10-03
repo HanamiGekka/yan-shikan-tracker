@@ -1,39 +1,38 @@
 # Project Purpose
 
-研时记是本地 Python CLI 时间记录与复盘工具。保持小型、可恢复、可测试；不引入 Web、数据库或大规模目录重构。
+Yan Shikan Tracker is a small local Python CLI for time recording and review. Keep changes recoverable and testable. Avoid web services, database migrations, and unnecessary tooling.
 
-# Architecture
+# Architecture and Primary Files
 
-原始 Excel 是事实来源，`output/` 是可重建结果。草稿用于中断恢复。保持现有根目录模块结构。
+Root `main.py` is a thin launcher. Implementation lives in `yan_shikan_tracker/`: `main.py` orchestrates the menu, `input_cli.py` handles interaction, `draft_io.py` handles recovery, `session_flow.py` commits, and `excel_io.py` stores Excel. Category/scoring rules live in `category_registry.py`, `config.py`, and `scorer.py`. Reports and charts use `reporter.py`, `plotter.py`, and `output_manager.py`.
 
-# Main Files
+Source Excel is authoritative; output is rebuildable. Preserve repository-level default storage and `YAN_SHIKAN_DATA_ROOT` overrides.
 
-`main.py` 入口；`input_cli.py` 交互；`draft_io.py` 草稿；`session_flow.py` 提交；`excel_io.py` 存储；`category_registry.py`/`config.py`/`scorer.py` 规则；`reporter.py`/`plotter.py`/`output_manager.py` 派生输出。
+# Run and Test
 
-# Run Command
+- Install runtime dependencies: `python -m pip install -r requirements.txt`.
+- Launch: `python main.py`.
+- Install test dependencies: `python -m pip install -r requirements-dev.txt`.
+- Test: `python -m pytest -q`.
+- Compile: `python -m compileall -q main.py yan_shikan_tracker tests`.
+- For demos or manual tests, set `YAN_SHIKAN_DATA_ROOT` to a fresh temporary directory; follow `docs/testing/MANUAL_SMOKE_TEST.md`.
 
-`python -m pip install -r requirements.txt`，然后 `python main.py`。演示或人工测试先设置 `YAN_SHIKAN_DATA_ROOT` 为独立临时目录。
+# Data Safety
 
-# Test Command
-
-`python -m pip install -r requirements-dev.txt`，然后 `python -m pytest -q tests`。
-
-# Data Safety Rules
-
-`data/`、`output/` 永远是私人目录。不得将真实内容复制到 `sample_data/`、`tests/`、文档或 Git。自动测试只能用虚构数据和临时目录；任何生产写入改动须证明失败后原始 Excel 与草稿仍可恢复。
+`data/`, `output/`, and `.local/` are protected private directories. Never publish, stage, or copy their contents into examples, tests, or documentation. Automated tests must use synthetic data and temporary directories. Production write changes must prove that failed commits preserve recoverable source Excel and drafts. Verify private-data hashes before and after authorized work.
 
 # Coding Rules
 
-沿用现有 Python 风格和类别兼容层。优先小范围变更；保留同日追加、旧类别读取和可重建输出。异常信息只含相对文件路径与错误类型，不输出个人备注。
+Follow existing Python style and package-relative imports. Prefer focused changes; preserve same-day append, category compatibility, and output rebuilding. Sanitize read errors to relative paths and error types; do not include personal notes. Chinese application UI may remain Chinese.
 
 # Git Rules
 
-只暂存明确审阅过的公开文件。提交前检查 `git diff --cached` 与忽略规则。未经用户明确授权，不配置 remote、不 push、不公开发布。
+Stage only explicitly reviewed public files. Check `git diff --cached` and ignore rules before committing. Configure remotes, push, and publish only with explicit user authorization and after any required human gate. Use `main` and short feature branches only when useful.
 
 # Documentation Rules
 
-README 说明当前运行方式；CHANGELOG 记录已发生的版本变化；ROADMAP 记录计划。历史 `engineering_log/` 留在本机，不再新增日期型日志。
+Maintain public documentation in English. README describes current usage; CHANGELOG records completed changes; ROADMAP contains future ideas. Keep historical local logs archived and ignored; do not create new dated engineering logs or duplicate existing documentation.
 
 # Definition of Done
 
-相关自动测试通过；真实 `data/`、`output/` 哈希不变；Git 候选无私人文件或高风险内容；交互变更附一次集中的人工 smoke test。
+Relevant tests pass; protected data hashes remain unchanged; public candidates contain no private files or high-risk content. Interaction changes require a focused human smoke test. Do not claim remote CI or manual validation passed before it actually does.

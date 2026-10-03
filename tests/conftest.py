@@ -13,9 +13,9 @@ if str(PROJECT_ROOT) not in sys.path:
 @pytest.fixture
 def isolated_storage(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Redirect every project storage path away from private user directories."""
-    import draft_io
-    import excel_io
-    import output_manager
+    from yan_shikan_tracker import draft_io
+    from yan_shikan_tracker import excel_io
+    from yan_shikan_tracker import output_manager
 
     data = tmp_path / "data"
     output = tmp_path / "output"
