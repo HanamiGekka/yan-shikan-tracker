@@ -1,5 +1,7 @@
 # Yan Shikan Tracker
 
+[![CI](https://github.com/HanamiGekka/yan-shikan-tracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/HanamiGekka/yan-shikan-tracker/actions/workflows/ci.yml)
+
 A local Python CLI for time tracking, daily review, and productivity trends.
 
 ## Overview
@@ -103,7 +105,7 @@ Local data, generated output, and local archives are excluded from this public t
 
 ## Project Status
 
-v0.6.0 focuses on data integrity, recoverable recording, and a small, tested repository. Future changes are driven by bugs, real usage needs, or explicit feature requests. No EXE, web deployment, or PyPI package is included. Future ideas are in [ROADMAP.md](ROADMAP.md).
+v0.6.0 focuses on data integrity, recoverable recording, and a small, tested repository. The project follows a maintenance policy: future changes are driven by bugs, real usage needs, or explicit feature requests. No EXE, web deployment, or PyPI package is included. Future ideas are in [ROADMAP.md](ROADMAP.md).
 
 ## License
 
