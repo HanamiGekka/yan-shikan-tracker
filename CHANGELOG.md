@@ -6,8 +6,10 @@ Known version history is retained below. Dates and changes reflect the existing 
 
 - Validate temporary daily Excel writes before atomic replacement and retain one previous workbook per date.
 - Preserve recoverable drafts on raw write failure; report saved raw data when derived output fails.
+- Handle ended interactive input without a traceback; retain confirmed drafts without automatic submission.
 - Report source workbook read failures explicitly instead of silently omitting records.
 - Create missing category configuration safely; normalize existing configuration without rewriting it.
+- Keep default data storage at the repository root and support an isolated `YAN_SHIKAN_DATA_ROOT` override.
 - Add fully synthetic samples, pytest regression tests, and a basic GitHub Actions CI workflow.
 - Separate local archives from public files and move implementation into a simple Python package while preserving the root launcher and storage locations.
 - Standardize maintained documentation in English and remove the personalized report salutation.

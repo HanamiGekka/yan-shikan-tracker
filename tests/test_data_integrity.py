@@ -193,3 +193,27 @@ def test_cli_can_start_with_isolated_storage_root(tmp_path: Path) -> None:
     assert completed.returncode == 0
     assert (tmp_path / "data" / "category_config.csv").exists()
     assert (tmp_path / "output" / "charts").is_dir()
+
+
+def test_eof_after_confirmation_preserves_draft_without_commit(isolated_storage: Path) -> None:
+    project = Path(__file__).resolve().parents[1]
+    env = os.environ.copy()
+    env["YAN_SHIKAN_DATA_ROOT"] = str(isolated_storage)
+    env["PYTHONIOENCODING"] = "utf-8"
+    completed = subprocess.run(
+        [sys.executable, str(project / "main.py")],
+        input="1\n2030-02-21\n5\na\n2\nFictional EOF demo only\nc\n",
+        text=True, encoding="utf-8", capture_output=True, env=env,
+        cwd=project, timeout=20,
+    )
+    assert completed.returncode == 0, completed.stderr
+    assert "Traceback" not in completed.stdout + completed.stderr
+    assert "输入流已结束" in completed.stdout
+    drafts = draft_io.list_drafts("2030-02-21")
+    assert len(drafts) == 1
+    assert len(drafts[0]["segments"]) == 1
+    assert drafts[0]["segments"][0]["duration_min"] == 5
+    assert drafts[0]["segments"][0]["feeling"] == 2
+    assert drafts[0]["segments"][0]["note"] == "Fictional EOF demo only"
+    assert not list((isolated_storage / "data").rglob("*.xlsx"))
+    assert not list((isolated_storage / "output").rglob("*.xlsx"))

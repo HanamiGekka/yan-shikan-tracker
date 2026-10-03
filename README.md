@@ -77,7 +77,7 @@ python -m pytest -q
 python -m compileall -q main.py yan_shikan_tracker tests
 ```
 
-Tests cover scoring, category compatibility, draft recovery, same-day append, write failures, output failures, malformed workbooks, configuration preservation, sample output generation, and storage-root resolution. Manual CLI validation is in [the smoke test](docs/testing/MANUAL_SMOKE_TEST.md). CI uses Python 3.11 on Ubuntu.
+Tests cover scoring, category compatibility, draft recovery, EOF interruption, same-day append, write failures, output failures, malformed workbooks, configuration preservation, sample output generation, and storage-root resolution. Manual CLI validation is in [the smoke test](docs/testing/MANUAL_SMOKE_TEST.md). CI uses Python 3.11 on Ubuntu.
 
 ## Repository Structure
 
@@ -103,7 +103,7 @@ Local data, generated output, and local archives are excluded from this public t
 
 ## Project Status
 
-The v0.6.0 candidate focuses on data integrity and repository cleanup. Public publication remains gated on the manual CLI smoke test and remote CI. No EXE, web deployment, or PyPI package is planned for this release. Future ideas are in [ROADMAP.md](ROADMAP.md).
+v0.6.0 focuses on data integrity, recoverable recording, and a small, tested repository. Future changes are driven by bugs, real usage needs, or explicit feature requests. No EXE, web deployment, or PyPI package is included. Future ideas are in [ROADMAP.md](ROADMAP.md).
 
 ## License
 

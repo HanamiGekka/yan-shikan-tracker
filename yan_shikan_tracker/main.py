@@ -97,7 +97,7 @@ def _handle_output_management() -> None:
             print(f"\n已清理全部 backup 目录数：{len(removed)}")
 
 
-def main() -> None:
+def _run_cli() -> None:
     ensure_project_files()
     print("研时记（Yan-Shikan-Tracker，研究时间记录）已启动。")
     print(f"分类配置文件：{CATEGORY_CONFIG_PATH}")
@@ -120,6 +120,13 @@ def main() -> None:
             continue
         if action == "output":
             _handle_output_management()
+
+
+def main() -> None:
+    try:
+        _run_cli()
+    except EOFError:
+        print("\n输入流已结束，程序先退出啦喵。已保存草稿仍保留，下次可以恢复。")
 
 
 if __name__ == "__main__":

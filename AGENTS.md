@@ -29,9 +29,13 @@ Follow existing Python style and package-relative imports. Prefer focused change
 
 Stage only explicitly reviewed public files. Check `git diff --cached` and ignore rules before committing. Configure remotes, push, and publish only with explicit user authorization and after any required human gate. Use `main` and short feature branches only when useful.
 
+Run relevant tests before commits.
+
 # Documentation Rules
 
 Maintain public documentation in English. README describes current usage; CHANGELOG records completed changes; ROADMAP contains future ideas. Keep historical local logs archived and ignored; do not create new dated engineering logs or duplicate existing documentation.
+
+Update CHANGELOG for user-visible changes. Update ROADMAP only for genuine unfinished ideas.
 
 # Definition of Done
 

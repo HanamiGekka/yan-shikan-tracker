@@ -508,8 +508,12 @@ def _handle_abnormal_session_end(
     confirmed_segments: list[dict[str, Any]],
     session_id: str,
     draft_path: Path | None,
+    stdin_ended: bool = False,
 ) -> DailyInputResult:
-    print("\n收到 Ctrl+C 了喵，这次按异常中断处理。")
+    if stdin_ended:
+        print("\n输入流已结束喵，这次按异常中断处理。")
+    else:
+        print("\n收到 Ctrl+C 了喵，这次按异常中断处理。")
 
     if confirmed_segments:
         persisted_path = _persist_draft(
@@ -591,10 +595,11 @@ def collect_daily_input() -> DailyInputResult:
                 continue
             return exit_result
 
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError) as exc:
             return _handle_abnormal_session_end(
                 date_str=date_str,
                 confirmed_segments=confirmed_segments,
                 session_id=active_session_id,
                 draft_path=active_draft_path,
+                stdin_ended=isinstance(exc, EOFError),
             )

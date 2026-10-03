@@ -22,6 +22,7 @@ exports/
 
 # Historical and personal local documents.
 .local/
+/Demand/
 engineering_log/
 Why_Develop_This_Project.md
 Temporary_Prompt_Words*.md
