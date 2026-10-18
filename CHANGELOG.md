@@ -2,6 +2,12 @@
 
 Known version history is retained below. Dates and changes reflect the existing version record.
 
+## Documentation maintenance — 2026-10-18
+
+- Polish the English introduction and add Simplified Chinese, Japanese and Traditional Chinese READMEs with shared navigation and matching privacy/storage guidance.
+- State explicitly that the application CLI and Excel labels remain Chinese; translations do not add UI languages or a new software release.
+- Check README local links and language navigation in CI. Product remains v0.6.0; source behavior, dependencies, real records and release assets are unchanged.
+
 ## [0.6.0] - 2026-10-03
 
 - Validate temporary daily Excel writes before atomic replacement and retain one previous workbook per date.

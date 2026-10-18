@@ -1,12 +1,16 @@
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [繁體中文](README.zh-TW.md)
+
 # Yan Shikan Tracker
 
 [![CI](https://github.com/HanamiGekka/yan-shikan-tracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/HanamiGekka/yan-shikan-tracker/actions/workflows/ci.yml)
 
-A local Python CLI for time tracking, daily review, and productivity trends.
+A local Python CLI for time tracking, daily review, and productivity trends. Record confirmed time segments, save them to Excel, then rebuild summaries and charts locally.
+
+Current release: [v0.6.0](https://github.com/HanamiGekka/yan-shikan-tracker/releases/tag/v0.6.0).
 
 ## Overview
 
-Record time segments, review daily scores, and rebuild reports from local Excel records. The CLI and workbook labels currently use Chinese. There is no web service or database.
+Record time segments, review daily scores, and rebuild reports from local Excel records. **The CLI interaction and Excel labels currently use Chinese.** The English, Simplified Chinese, Japanese and Traditional Chinese READMEs describe the same program; documentation translations do not add an English or Japanese application UI. There is no web service or database.
 
 ## Features
 
@@ -16,12 +20,6 @@ Record time segments, review daily scores, and rebuild reports from local Excel 
 - Generate daily summary workbooks, text reviews, LLM prompts, and 7/30/90-day and full-history charts.
 - Rebuild outputs for a date, date range, or all recorded dates.
 - Validate a temporary daily workbook before atomic replacement, retaining one previous version per date.
-
-## How It Works
-
-The root `main.py` launches `yan_shikan_tracker.main`. Input and drafts flow through `input_cli.py`, `draft_io.py`, and `session_flow.py`; `excel_io.py` stores the source records. `category_registry.py`, `config.py`, and `scorer.py` define category and scoring rules. `reporter.py`, `plotter.py`, and `output_manager.py` create rebuildable outputs.
-
-A successful raw commit clears its draft before rebuilding output. If output generation fails, the raw record remains saved; use Output Management to rebuild that date.
 
 ## Installation
 
@@ -77,9 +75,16 @@ All generated files must be inside `$demoRoot`. Do not point this variable at yo
 python -m pip install -r requirements-dev.txt
 python -m pytest -q
 python -m compileall -q main.py yan_shikan_tracker tests
+python scripts/check_readmes.py
 ```
 
-Tests cover scoring, category compatibility, draft recovery, EOF interruption, same-day append, write failures, output failures, malformed workbooks, configuration preservation, sample output generation, and storage-root resolution. Manual CLI validation is in [the smoke test](docs/testing/MANUAL_SMOKE_TEST.md). CI uses Python 3.11 on Ubuntu.
+Tests cover scoring, category compatibility, draft recovery, EOF interruption, same-day append, write failures, output failures, malformed workbooks, configuration preservation, sample output generation, and storage-root resolution. Manual CLI validation is in [the smoke test](docs/testing/MANUAL_SMOKE_TEST.md). CI uses Python 3.11 on Ubuntu and also checks README language navigation and local links.
+
+## How It Works
+
+The root `main.py` launches `yan_shikan_tracker.main`. Input and drafts flow through `input_cli.py`, `draft_io.py`, and `session_flow.py`; `excel_io.py` stores the source records. `category_registry.py`, `config.py`, and `scorer.py` define category and scoring rules. `reporter.py`, `plotter.py`, and `output_manager.py` create rebuildable outputs.
+
+A successful raw commit clears its draft before rebuilding output. If output generation fails, the raw record remains saved; use Output Management to rebuild that date.
 
 ## Repository Structure
 
@@ -88,6 +93,7 @@ yan-shikan-tracker/
 |-- yan_shikan_tracker/
 |-- tests/
 |-- sample_data/
+|-- scripts/
 |-- docs/testing/
 |-- docs/release/
 |-- .github/workflows/

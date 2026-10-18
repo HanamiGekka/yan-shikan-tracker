@@ -5,8 +5,8 @@
 - Thin root launcher and `yan_shikan_tracker/` implementation package.
 - `tests/` using synthetic fixtures and temporary directories.
 - `sample_data/` with fictional workbooks, example configuration, and documentation.
-- README, AGENTS, CHANGELOG, ROADMAP, and MIT LICENSE.
-- Runtime and development requirements, Git text/binary rules, ignore rules, and basic CI.
+- English, Simplified Chinese, Japanese and Traditional Chinese READMEs; AGENTS, CHANGELOG, ROADMAP and MIT LICENSE.
+- Runtime and development requirements, Git text/binary rules, ignore rules, basic CI and the read-only README checker in `scripts/check_readmes.py`.
 - Public manual testing instructions and release documentation under `docs/`.
 
 ## Excluded

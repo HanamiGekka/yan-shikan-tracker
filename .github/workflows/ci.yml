@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+      - name: README language navigation and local links
+        run: python scripts/check_readmes.py
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m pytest -q tests
       - run: python -m compileall -q main.py yan_shikan_tracker tests
